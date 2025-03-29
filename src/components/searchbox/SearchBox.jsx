@@ -1,11 +1,18 @@
+//* Libraries
 import style from "./SearchBox.module.css";
 import { CiSearch } from "react-icons/ci";
-
 import { motion } from "framer-motion";
 
-const SearchBox = ({ searchBoxValue, setSearchBoxValue }) => {
+//* Redux
+import { useDispatch, useSelector } from "react-redux";
+import { changeFilter } from "../../redux/filtersSlice";
+
+const SearchBox = () => {
+  const dispatch = useDispatch();
+  const filterData = useSelector((state) => state.filters.name);
+
   const onSearchBoxChange = (event) => {
-    setSearchBoxValue(event.target.value);
+    dispatch(changeFilter(event.target.value));
   };
 
   return (
@@ -20,7 +27,7 @@ const SearchBox = ({ searchBoxValue, setSearchBoxValue }) => {
       <input
         placeholder="Search"
         className={style.contactInput}
-        value={searchBoxValue}
+        value={filterData}
         onChange={onSearchBoxChange}
         type="text"
       />

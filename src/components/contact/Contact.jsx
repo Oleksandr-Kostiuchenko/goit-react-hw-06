@@ -1,62 +1,57 @@
-import { useEffect, useState } from "react";
+//* Libraries
 import style from "./Contact.module.css";
-
 import { motion } from "framer-motion";
+import toast, { Toaster } from "react-hot-toast";
 
-const randomColorsArr = [
-  "#A3C4BC",
-  "#C3B299",
-  "#D4A5A5",
-  "#A5A5D4",
-  "#D4C5A5",
-  "#A5D4C5",
-  "#C5A5D4",
-  "#D4A5C5",
-  "#A5D4A5",
-  "#C5D4A5",
-];
+//* Redux
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { deleteContact } from "../../redux/contactsSlice";
 
-const Contact = ({ contactData, onDelete }) => {
+const Contact = ({ contactData, notifySuccessRemoove }) => {
+  const dispatch = useDispatch();
+  const handleDelete = () => {
+    dispatch(deleteContact(contactData.id));
+    notifySuccessRemoove(contactData.name);
+  };
+
   const name = contactData.name.split(" ");
   const firstName = name[0];
   const secondName = name[1];
 
-  const [randomColor, setRandomColor] = useState(
-    randomColorsArr[Math.ceil(Math.random(0, randomColorsArr.length - 1) * 10)]
-  );
-
-  useEffect(() => {
-    localStorage.setItem(`${contactData.id}`, randomColor);
-  }, []);
-
   return (
-    <motion.div
-      className={style.contactWrapper}
-      initial={{ opacity: 0, y: 50 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -50 }}
-      transition={{ duration: 0.4 }}
-    >
-      <div className={style.personInfoWrapper}>
-        <div
-          className={style.personAvatar}
-          style={{ backgroundColor: randomColor }}
-        >
-          {firstName[0]}
-          {secondName !== undefined && secondName[0]}
+    <>
+      <motion.div
+        className={style.contactWrapper}
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -50 }}
+        transition={{ duration: 0.4 }}
+      >
+        <div className={style.personInfoWrapper}>
+          <div
+            className={style.personAvatar}
+            style={{ backgroundColor: contactData.color }}
+          >
+            {firstName[0]}
+            {secondName !== undefined && secondName[0]}
+          </div>
+          <div className={style.nameWrapper}>
+            <p className={style.personName}>{contactData.name}</p>
+            <a
+              className={style.personNumber}
+              href={`tel:${contactData.number}`}
+            >
+              {contactData.number}
+            </a>
+          </div>
         </div>
-        <div className={style.nameWrapper}>
-          <p className={style.personName}>{contactData.name}</p>
-          <a className={style.personNumber} href={`tel:${contactData.number}`}>
-            {contactData.number}
-          </a>
-        </div>
-      </div>
 
-      <button className={style.deleteBtn} onClick={() => onDelete(contactData)}>
-        Delete
-      </button>
-    </motion.div>
+        <button className={style.deleteBtn} onClick={handleDelete}>
+          Delete
+        </button>
+      </motion.div>
+    </>
   );
 };
 
