@@ -1,6 +1,13 @@
 .contactWrapper {
   display: flex;
   justify-content: space-between;
+  width: 90%;
+}
+
+@media screen and (max-width: 768px) {
+  .contactWrapper {
+    width: 90%;
+  }
 }
 
 .personInfoWrapper {
@@ -102,4 +109,31 @@
     width: 900px;
     border-bottom: 1px solid #d9dbe9;
   }
+}
+
+.favBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 15px;
+  height: 15px;
+
+  border: none;
+  outline: none;
+  background-color: transparent;
+}
+
+.likeIcon {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+}
+
+.btnsWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
 }

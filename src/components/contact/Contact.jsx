@@ -2,17 +2,34 @@
 import style from "./Contact.module.css";
 import { motion } from "framer-motion";
 import toast, { Toaster } from "react-hot-toast";
+import { FaRegHeart } from "react-icons/fa";
+import { FaHeart } from "react-icons/fa6";
 
 //* Redux
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { deleteContact } from "../../redux/contactsSlice";
+import { addFav } from "../../redux/favSlice";
+import { deleteFav } from "../../redux/favSlice";
 
 const Contact = ({ contactData, notifySuccessRemoove }) => {
   const dispatch = useDispatch();
+  const favInfo = useSelector((state) => state.fav.items);
+  const isFav = favInfo.some((fav) => fav.id === contactData.id);
+
   const handleDelete = () => {
     dispatch(deleteContact(contactData.id));
     notifySuccessRemoove(contactData.name);
+  };
+
+  const handleToggleFav = () => {
+    const isFavorite = favInfo.some((fav) => fav.id === contactData.id);
+
+    if (isFavorite) {
+      dispatch(deleteFav(contactData.id));
+    } else {
+      dispatch(addFav(contactData));
+    }
   };
 
   const name = contactData.name.split(" ");
@@ -47,9 +64,18 @@ const Contact = ({ contactData, notifySuccessRemoove }) => {
           </div>
         </div>
 
-        <button className={style.deleteBtn} onClick={handleDelete}>
-          Delete
-        </button>
+        <div className={style.btnsWrapper}>
+          <button className={style.deleteBtn} onClick={handleDelete}>
+            Delete
+          </button>
+          <button className={style.favBtn} onClick={handleToggleFav}>
+            {isFav ? (
+              <FaHeart className={style.likeIcon} />
+            ) : (
+              <FaRegHeart className={style.likeIcon} />
+            )}
+          </button>
+        </div>
       </motion.div>
     </>
   );

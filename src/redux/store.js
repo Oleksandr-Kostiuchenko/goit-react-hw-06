@@ -4,6 +4,7 @@ import { configureStore } from "@reduxjs/toolkit";
 //* Reducers
 import contactsReducer from "./contactsSlice";
 import filterReducer from "./filtersSlice";
+import favortitesReducer from "./favSlice";
 
 //* Persist
 import {
@@ -26,10 +27,19 @@ const persistedContactsReducer = persistReducer(
   contactsReducer
 );
 
+const persistedFavsReducer = persistReducer(
+  {
+    key: "favorites",
+    storage,
+  },
+  favortitesReducer
+);
+
 export const store = configureStore({
   reducer: {
     contacts: persistedContactsReducer,
     filters: filterReducer,
+    fav: persistedFavsReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
