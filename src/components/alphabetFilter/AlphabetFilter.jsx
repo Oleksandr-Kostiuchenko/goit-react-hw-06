@@ -1,5 +1,5 @@
 //* Components
-import style from "./alphabetFilter.module.css";
+import style from "./AlphabetFilter.module.css";
 
 import AlphabetBtn from "../alphabetBtn/alphabetBtn";
 
