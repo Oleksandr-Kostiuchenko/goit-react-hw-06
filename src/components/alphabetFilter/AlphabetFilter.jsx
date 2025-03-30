@@ -1,6 +1,5 @@
 //* Components
 import style from "./AlphabetFilter.module.css";
-
 import AlphabetBtn from "../alphabetBtn/AlphabetBtn";
 
 //* Libraries

@@ -1,4 +1,4 @@
-import style from "./alphabetBtn.module.css";
+import style from "./AlphabetBtn.module.css";
 
 //* Redux
 import { useDispatch, useSelector } from "react-redux";
