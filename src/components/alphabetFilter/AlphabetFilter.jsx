@@ -1,7 +1,7 @@
 //* Components
 import style from "./AlphabetFilter.module.css";
 
-import AlphabetBtn from "../alphabetBtn/alphabetBtn";
+import AlphabetBtn from "../alphabetBtn/AlphabetBtn";
 
 //* Libraries
 import { IoCloseCircleSharp } from "react-icons/io5";
